@@ -7,6 +7,7 @@ nuovo accordo. Valori delle fasce (Allegato 2) confermati dal proprietario del
 progetto; nessun accordo più recente risulta stipulato (3/11/2026).
 """
 
+NOME = "Ameglia, Bolano, Castelnuovo Magra, Vezzano Ligure (2018)"
 VERIFICATO = True
 FONTE = ("Accordo Territoriale Ameglia/Bolano/Castelnuovo Magra/Vezzano Ligure, "
          "in vigore dal 15/07/2018 (data di deposito: da completare)")
@@ -37,11 +38,13 @@ COEFF_POSTO_AUTO_COMUNE = 0.20
 COEFF_AUTORIMESSA = 0.50
 COEFF_VERDE_CONDOMINIO = 0.10   # quota millesimale, fino alla superficie dell'abitazione
 
-# ---- Allegato 2: fasce €/m² al mese (area unica "U") ------------------
-FASCE = {
-    "MIN": (4.00, 7.00),
-    "MEDIA": (4.50, 8.15),
-    "MAX": (5.00, 9.00),
+# ---- Allegato 2: fasce €/m² al mese, per zona (qui area omogenea unica "U") ----
+FASCE_PER_ZONA = {
+    "U (unica)": {
+        "MIN": (4.00, 7.00),
+        "MEDIA": (4.50, 8.15),
+        "MAX": (5.00, 9.00),
+    },
 }
 
 # ---- Art. 5 e art. 7: maggiorazioni/riduzioni sul canone base ----------

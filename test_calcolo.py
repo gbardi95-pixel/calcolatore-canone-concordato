@@ -1,5 +1,6 @@
 import pytest
 
+from accordi import ameglia as A
 from calcolo import (Input, calcola, fascia_globale, mq_abitazione_convenzionale,
                      pct_accessori_pregio)
 
@@ -10,7 +11,7 @@ AUTO_MIN = "Assenza di autorimessa e/o posto auto esclusivo interno"
 
 
 def base(**kw):
-    args = dict(categoria="A/4", mq_abitazione=60.0, tipologia_edilizia=TIP_MIN, vetusta=VET_MIN,
+    args = dict(accordo=A, categoria="A/4", mq_abitazione=60.0, tipologia_edilizia=TIP_MIN, vetusta=VET_MIN,
                 spazi_comuni=SPAZI_MIN, autorimessa_livello=AUTO_MIN)
     args.update(kw)
     return calcola(Input(**args))
@@ -19,7 +20,7 @@ def base(**kw):
 @pytest.mark.parametrize("mq,atteso", [(45.0, 50.6), (40.0, 48.0), (46.0, 50.6),
                                        (70.0, 70.0), (60.0, 66.0), (80.0, 80.0)])
 def test_coefficiente_taglio(mq, atteso):
-    assert mq_abitazione_convenzionale(mq) == pytest.approx(atteso)
+    assert mq_abitazione_convenzionale(A, mq) == pytest.approx(atteso)
 
 
 def test_tutti_minimi_fascia_min():
@@ -48,7 +49,7 @@ def test_fascia_globale(livelli, atteso):
 
 @pytest.mark.parametrize("n,pct", [(0, 0), (1, 0), (2, 5), (3, 10), (4, 15), (10, 15)])
 def test_pct_pregi(n, pct):
-    assert pct_accessori_pregio(n) == pct
+    assert pct_accessori_pregio(A, n) == pct
 
 
 def test_maggiorazioni_sul_canone_base():

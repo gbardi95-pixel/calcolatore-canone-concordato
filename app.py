@@ -1,16 +1,20 @@
 import streamlit as st
 
-import parametri as P
+from accordi import ACCORDI
 from calcolo import Input, calcola
 
 st.set_page_config(
-    page_title="Calcolatore Canone Concordato - Ameglia",
+    page_title="Calcolatore Canone Concordato",
     page_icon="🏠",
     layout="wide",
 )
 
-st.title("🏠 Simulatore Canone Concordato - Ameglia (SP)")
-st.caption("Accordo Territoriale Ameglia / Bolano / Castelnuovo Magra / Vezzano Ligure (L. 431/98, D.M. 16/01/2017) - area omogenea unica")
+st.title("🏠 Simulatore Canone Concordato")
+st.caption("Calcolo secondo l'Accordo Territoriale (L. 431/98, D.M. 16/01/2017)")
+
+nome_accordo = st.selectbox("Accordo territoriale / Comune", list(ACCORDI))
+P = ACCORDI[nome_accordo]
+zona = st.selectbox("Zona", list(P.FASCE_PER_ZONA)) if len(P.FASCE_PER_ZONA) > 1 else next(iter(P.FASCE_PER_ZONA))
 
 if not P.VERIFICATO:
     st.warning(f"⚠️ **Stima indicativa.** Parametri non ancora verificati. Fonte: {P.FONTE}.")
@@ -21,7 +25,7 @@ else:
 # 1. CATEGORIA CATASTALE
 # ==========================================
 st.subheader("1. Categoria Catastale")
-codici = list(P.CATEGORIE_CATASTALI)
+codici = sorted(P.CATEGORIE_CATASTALI, key=lambda c: int(c.split("/")[1]))
 codice_cat = st.selectbox(
     "Categoria catastale", options=codici, index=codici.index("A/3"),
     format_func=lambda c: f"{c} - {P.CATEGORIE_CATASTALI[c]['nome']}",
@@ -106,7 +110,7 @@ pregi = st.multiselect("Elementi presenti", P.ACCESSORI)
 # CALCOLO E RISULTATI
 # ==========================================
 r = calcola(Input(
-    categoria=codice_cat, mq_abitazione=mq_abitazione, cantina=mq_cantina, balconi=mq_balconi,
+    accordo=P, zona=zona, categoria=codice_cat, mq_abitazione=mq_abitazione, cantina=mq_cantina, balconi=mq_balconi,
     area_scoperta=mq_area_scoperta, posto_auto_comune=mq_posto_comune, autorimessa=mq_autorimessa,
     verde_condominio=mq_verde, tipologia_edilizia=tip_edilizia, vetusta=vetusta,
     accessori_dotazione=accessori_dot, spazi_comuni=spazi, servizi_tecnici=n_servizi,
