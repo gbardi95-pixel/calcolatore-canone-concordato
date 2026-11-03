@@ -82,10 +82,10 @@ def livello_servizi(n: int) -> str:
     return "MAX" if n >= 2 else "MEDIA" if n == 1 else "MIN"
 
 
-def fascia_globale(livelli: list[str]) -> str:
+def fascia_globale(livelli: list[str], regola_due_medie_tre_minime: bool = True) -> str:
     """Classificazione globale (Allegato 3): prevale il livello più frequente."""
     n = {k: livelli.count(k) for k in LIVELLI}
-    if (n["MIN"], n["MEDIA"], n["MAX"]) == (3, 2, 2):   # caso esplicito dell'accordo
+    if regola_due_medie_tre_minime and (n["MIN"], n["MEDIA"], n["MAX"]) == (3, 2, 2):
         return "MEDIA"
     top = max(n.values())
     in_testa = {k for k in LIVELLI if n[k] == top}
@@ -126,7 +126,7 @@ def calcola(i: Input) -> Risultato:
     mq_tot = mq_abit + sum(pert.values())
 
     livelli = livelli_criteri(i)
-    fascia = fascia_globale([v for v in livelli.values() if v])
+    fascia = fascia_globale([v for v in livelli.values() if v], a.REGOLA_DUE_MEDIE_TRE_MINIME)
     fasce = a.FASCE_PER_ZONA[i.zona or next(iter(a.FASCE_PER_ZONA))]
     k_istat = 1 + i.istat_pct / 100
     vmin, vmax = fasce[fascia][0] * k_istat, fasce[fascia][1] * k_istat

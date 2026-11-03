@@ -13,7 +13,7 @@ DATA_ISTAT = "15/07/2021"   # da quando i valori delle fasce si aggiornano al 10
 NOTE: list[str] = []         # avvertenze mostrate nell'app
 VERIFICATO = True
 FONTE = ("Accordo Territoriale Ameglia/Bolano/Castelnuovo Magra/Vezzano Ligure, "
-         "in vigore dal 15/07/2018 (data di deposito: da completare)")
+         "in vigore dal 15/07/2018")
 
 CATEGORIE_CATASTALI = {
     "A/2": {"nome": "Abitazioni di tipo civile", "ammesso": True, "desc": "Fabbricati di tipo economico o medio dotati di buone finiture e impianti standard."},
@@ -63,6 +63,10 @@ DURATA = {
     "Oltre 4 anni (5+2, 6+2...): +8%": 8.0,
 }
 STORICO_VINCOLATO = 10.0
+
+# Allegato 3, classificazione globale: con 2 massime, 2 medie e 3 minime vale MEDIA.
+# Presente solo in alcuni accordi (Ameglia, Riccò, Bonassola).
+REGOLA_DUE_MEDIE_TRE_MINIME = True
 
 # ---- Allegato 4: elementi accessori (pregi) ---------------------------
 ACCESSORI = [

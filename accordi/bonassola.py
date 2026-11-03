@@ -4,8 +4,8 @@ from .ameglia import *  # noqa: F401,F403
 
 NOME = 'Bonassola e altri 7 comuni (2018)'
 COMUNI = 'Bonassola, Deiva Marina, Framura, Levanto, Monterosso al Mare, Portovenere, Riomaggiore, Vernazza'
-FONTE = 'Accordo Territoriale microzona Bonassola, 2018 (data di deposito: da completare)'
-VERIFICATO = False
+FONTE = 'Accordo Territoriale microzona Bonassola, 2018'
+VERIFICATO = True
 DATA_ISTAT = '01/06/2021'
 NOTE = ["Nella scansione di questo accordo non ho trovato l'Allegato 4 (elementi accessori): è usata la tabella degli altri accordi del 2018, da verificare."]
 

@@ -4,14 +4,13 @@ from .ameglia import *  # noqa: F401,F403
 
 NOME = "Lerici"
 COMUNI = "Lerici"
-FONTE = "Accordo Territoriale Comune di Lerici, 17/02/2018 (data di deposito: da completare)"
-VERIFICATO = False
+FONTE = "Accordo Territoriale Comune di Lerici, 17/02/2018"
+VERIFICATO = True
 DATA_ISTAT = "01/03/2021"
-NOTE = [
-    "Scansione di qualità bassa: i valori €/m² vanno ricontrollati sul documento (in particolare zona D3, "
-    "fascia MAX 8,6-10,4, uguale al minimo di B1-C1).",
-    "Criteri (Allegato 3), accessori e altre maggiorazioni non riletti per questo accordo: assunti uguali ad Ameglia.",
-]
+NOTE = []
+
+REGOLA_DUE_MEDIE_TRE_MINIME = False   # l'Allegato 3 di questo accordo non la prevede
+STORICO_VINCOLATO = 20.0              # art. 7: immobili storici vincolati +20%
 
 # Art. 5: qui l'arredo dà al massimo +20% (nessun +30%)
 ARREDO = {

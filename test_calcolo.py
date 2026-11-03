@@ -76,3 +76,17 @@ def test_a7_non_conta_accessori_esclusi():
 def test_istat():
     r = base(istat_pct=10.0)
     assert r.canone_min == round(66 * 4.0 * 1.1, 2)
+
+
+def test_regola_due_medie_tre_minime_solo_dove_prevista():
+    livelli = ["MAX"] * 2 + ["MEDIA"] * 2 + ["MIN"] * 3
+    assert fascia_globale(livelli, True) == "MEDIA"
+    assert fascia_globale(livelli, False) == "MIN"
+
+
+def test_accordi_senza_regola_e_lerici():
+    from accordi import ACCORDI
+    assert ACCORDI["Ameglia, Bolano, Castelnuovo Magra, Vezzano Ligure (2018)"].REGOLA_DUE_MEDIE_TRE_MINIME
+    assert not ACCORDI["Luni"].REGOLA_DUE_MEDIE_TRE_MINIME
+    assert ACCORDI["Lerici"].STORICO_VINCOLATO == 20.0
+    assert ACCORDI["Lerici"].ARREDO and max(ACCORDI["Lerici"].ARREDO.values()) == 20.0

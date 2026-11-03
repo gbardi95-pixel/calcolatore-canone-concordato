@@ -11,8 +11,10 @@ superficie convenzionale, fascia di oscillazione (MIN / MEDIA / MAX) e maggioraz
 
 | Accordo | Stato |
 |---|---|
-| Ameglia, Bolano, Castelnuovo Magra, Vezzano Ligure (dal 15/07/2018) | verificato |
-| Riccò del Golfo e altri 13 comuni, Bonassola e altri 7 comuni, Arcola, Luni, Sarzana, Santo Stefano di Magra, Lerici | disponibili, da ricontrollare (l'app mostra un avviso) |
+| Ameglia, Bolano, Castelnuovo Magra, Vezzano Ligure (2018) | disponibile |
+| Riccò del Golfo e altri 13 comuni (2018) | disponibile |
+| Bonassola e altri 7 comuni (2018) | disponibile (Allegato 4 assente nella scansione: usata la tabella degli altri accordi) |
+| Arcola, Luni, Sarzana, Santo Stefano di Magra, Lerici | disponibili (Lerici: arredo max +20%, immobili storici +20%) |
 | La Spezia (validità 2026-2028) | non ancora inserito: ha una struttura diversa |
 
 Il programma è pensato per supportare più aree: ogni accordo è un file in `accordi/`.
