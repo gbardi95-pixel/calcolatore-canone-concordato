@@ -15,7 +15,7 @@ superficie convenzionale, fascia di oscillazione (MIN / MEDIA / MAX) e maggioraz
 | Riccò del Golfo e altri 13 comuni (2018) | disponibile |
 | Bonassola e altri 7 comuni (2018) | disponibile (Allegato 4 assente nella scansione: usata la tabella degli altri accordi) |
 | Arcola, Luni, Sarzana, Santo Stefano di Magra, Lerici | disponibili (Lerici: arredo max +20%, immobili storici +20%) |
-| La Spezia (validità 2026-2028) | non ancora inserito: ha una struttura diversa |
+| La Spezia (valido dal 01/01/2026 al 31/12/2028) | disponibile (nessun adeguamento ISTAT sulle fasce) |
 
 Il programma è pensato per supportare più aree: ogni accordo è un file in `accordi/`.
 

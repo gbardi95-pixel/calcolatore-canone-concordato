@@ -90,3 +90,14 @@ def test_accordi_senza_regola_e_lerici():
     assert not ACCORDI["Luni"].REGOLA_DUE_MEDIE_TRE_MINIME
     assert ACCORDI["Lerici"].STORICO_VINCOLATO == 20.0
     assert ACCORDI["Lerici"].ARREDO and max(ACCORDI["Lerici"].ARREDO.values()) == 20.0
+
+
+def test_la_spezia():
+    from accordi import ACCORDI
+    L = ACCORDI["La Spezia (2026-2028)"]
+    assert L.DATA_ISTAT is None and len(L.FASCE_PER_ZONA) == 6
+    r = calcola(Input(accordo=L, zona="R6", categoria="A/4", mq_abitazione=60.0,
+                      tipologia_edilizia=list(L.TIPOLOGIA_EDILIZIA)[2], vetusta=list(L.VETUSTA)[2],
+                      spazi_comuni=list(L.SPAZI_COMUNI)[4], autorimessa_livello=list(L.AUTORIMESSA)[2]))
+    assert r.fascia == "MIN"
+    assert (r.canone_min, r.canone_max) == (round(66 * 2.32, 2), round(66 * 7.45, 2))

@@ -69,13 +69,15 @@ with col_dx:
         durata_pct = P.DURATA[st.selectbox("Durata del contratto", list(P.DURATA))]
     arredo_pct = P.ARREDO[st.selectbox("Arredamento", list(P.ARREDO))]
     viabilita = st.checkbox("Adiacente a viabilità ad elevato traffico (−10%, attestato da un'organizzazione)")
-    storico = st.checkbox("Immobile storico vincolato (+10%)")
-    istat = st.number_input(
-        "Adeguamento ISTAT da applicare ai valori €/m² (%)", min_value=0.0, max_value=50.0, value=0.0, step=0.1,
-        help=(f"Art. 3 dell'accordo: i valori delle fasce si aggiornano al 100% della variazione ISTAT dal "
-              f"{P.DATA_ISTAT} per i contratti nuovi. Indice da completare. Non è l'aggiornamento annuale del "
-              "canone in corso (art. 5, max 75%), a cui si rinuncia con la cedolare secca."),
-    )
+    storico = st.checkbox(f"Immobile storico vincolato (+{P.STORICO_VINCOLATO:.0f}%)")
+    istat = 0.0
+    if P.DATA_ISTAT:
+        istat = st.number_input(
+            "Adeguamento ISTAT da applicare ai valori €/m² (%)", min_value=0.0, max_value=50.0, value=0.0, step=0.1,
+            help=(f"Art. 3 dell'accordo: i valori delle fasce si aggiornano al 100% della variazione ISTAT dal "
+                  f"{P.DATA_ISTAT} per i contratti nuovi. Indice da completare. Non è l'aggiornamento annuale del "
+                  "canone in corso (art. 5, max 75%), a cui si rinuncia con la cedolare secca."),
+        )
 
 st.divider()
 
