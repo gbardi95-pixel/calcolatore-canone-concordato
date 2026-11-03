@@ -68,16 +68,9 @@ with col_dx:
     if agevolato:
         durata_pct = P.DURATA[st.selectbox("Durata del contratto", list(P.DURATA))]
     arredo_pct = P.ARREDO[st.selectbox("Arredamento", list(P.ARREDO))]
-    viabilita = st.checkbox("Adiacente a viabilità ad elevato traffico (−10%, attestato da un'organizzazione)")
+    viabilita = st.checkbox("Adiacente a viabilità ad elevato traffico (−10% sul canone massimo, attestato da un'organizzazione)")
     storico = st.checkbox(f"Immobile storico vincolato (+{P.STORICO_VINCOLATO:.0f}%)")
     istat = 0.0
-    if P.DATA_ISTAT:
-        istat = st.number_input(
-            "Adeguamento ISTAT da applicare ai valori €/m² (%)", min_value=0.0, max_value=50.0, value=0.0, step=0.1,
-            help=(f"Art. 3 dell'accordo: i valori delle fasce si aggiornano al 100% della variazione ISTAT dal "
-                  f"{P.DATA_ISTAT} per i contratti nuovi. Indice da completare. Non è l'aggiornamento annuale del "
-                  "canone in corso (art. 5, max 75%), a cui si rinuncia con la cedolare secca."),
-        )
 
 st.divider()
 
@@ -111,6 +104,17 @@ st.subheader("5. Elementi accessori di pregio (Allegato 4)")
 st.caption("Da 2 elementi +5%, da 3 +10%, da 4 in su +15% sul canone base.")
 pregi = st.multiselect("Elementi presenti", P.ACCESSORI)
 
+if P.DATA_ISTAT:
+    with st.expander("Opzionale: aggiornamento ISTAT delle fasce (art. 3 dell'accordo)"):
+        st.caption(
+            f"L'accordo prevede che i valori €/m² delle fasce siano aggiornati al 100% della variazione ISTAT "
+            f"dal {P.DATA_ISTAT} per i contratti stipulati dopo il deposito. Riguarda le fasce dei contratti nuovi, "
+            "non l'aggiornamento annuale del canone in corso (art. 5, max 75%): quest'ultimo con la cedolare secca "
+            "non si può chiedere (art. 3, c. 11, D.Lgs. 23/2011) e l'app non lo calcola. Indice da completare: "
+            "lascia 0 se non lo conosci o se le organizzazioni firmatarie non lo applicano."
+        )
+        istat = st.number_input("Variazione ISTAT da applicare ai valori €/m² (%)", min_value=0.0, max_value=50.0, value=0.0, step=0.1)
+
 # ==========================================
 # CALCOLO E RISULTATI
 # ==========================================
@@ -129,7 +133,9 @@ st.subheader("6. Risultato")
 m1, m2, m3 = st.columns(3)
 m1.metric("Superficie convenzionale", f"{r.superficie_convenzionale:.2f} m²")
 m2.metric("Fascia", r.fascia, delta=f"€ {r.valore_min:.2f} - {r.valore_max:.2f} /m²/mese", delta_color="off")
-m3.metric("Maggiorazioni totali", f"{r.variazione_pct:+.0f}%")
+m3.metric("Maggiorazioni sul canone base",
+          f"{r.variazione_pct:+.0f}%" if r.variazione_pct == r.variazione_pct_min
+          else f"{r.variazione_pct_min:+.0f}% min / {r.variazione_pct:+.0f}% max")
 
 st.markdown(f"### **Canone mensile: € {r.canone_min:.2f} – € {r.canone_max:.2f}**")
 st.caption(

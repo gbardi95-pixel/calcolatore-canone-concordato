@@ -44,7 +44,8 @@ class Risultato:
     valore_min: float
     valore_max: float
     maggiorazioni: list[tuple[str, float]] = field(default_factory=list)
-    variazione_pct: float = 0.0
+    variazione_pct: float = 0.0          # sul canone massimo (tutte le voci)
+    variazione_pct_min: float = 0.0      # sul canone minimo (senza la riduzione viabilità)
     canone_min: float = 0.0
     canone_max: float = 0.0
 
@@ -141,9 +142,11 @@ def calcola(i: Input) -> Risultato:
     pct_pregi = pct_accessori_pregio(a, i.n_accessori_pregio)
     if pct_pregi:
         magg.append((f"Elementi accessori ({i.n_accessori_pregio})", pct_pregi))
-    if i.viabilita_traffico:
-        magg.append(("Viabilità ad elevato traffico", a.VIABILITA_TRAFFICO))
+    var_min = sum(p for _, p in magg)
+    if i.viabilita_traffico:    # gli accordi prevedono la riduzione del solo canone massimo
+        magg.append(("Viabilità ad elevato traffico (solo sul massimo)", a.VIABILITA_TRAFFICO))
     var = sum(p for _, p in magg)
-    f = 1 + var / 100
-    return Risultato(mq_abit, pert, mq_tot, livelli, fascia, vmin, vmax, magg, var,
-                     round(mq_tot * vmin * f, 2), round(mq_tot * vmax * f, 2))
+    canone_max = round(mq_tot * vmax * (1 + var / 100), 2)
+    # il massimo ridotto per viabilità è un tetto: il minimo non lo può superare
+    canone_min = min(round(mq_tot * vmin * (1 + var_min / 100), 2), canone_max)
+    return Risultato(mq_abit, pert, mq_tot, livelli, fascia, vmin, vmax, magg, var, var_min, canone_min, canone_max)

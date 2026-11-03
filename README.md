@@ -38,7 +38,7 @@ pytest
 - `app.py` – interfaccia Streamlit
 - `calcolo.py` – logica di calcolo, senza interfaccia
 - `accordi/` – un modulo per ogni accordo territoriale (valori €/m², coefficienti, criteri, maggiorazioni)
-- `test_calcolo.py` – test
+- `test_calcolo.py`, `test_accordi.py` – test (anche sulla coerenza dei dati di ogni accordo); su GitHub partono a ogni push (`.github/workflows/test.yml`)
 
 ## Aggiungere un nuovo accordo
 
@@ -54,7 +54,8 @@ diverse (altri criteri, altri tipi di maggiorazione) richiedono di estendere `ca
 
 ## Limiti noti
 
-- L'adeguamento ISTAT dei valori delle fasce è un campo da compilare a mano: l'indice non è incluso.
+- L'aggiornamento ISTAT delle fasce (art. 3 degli accordi) è un campo facoltativo da compilare a mano: l'indice non è incluso. L'aggiornamento annuale del canone in corso non è calcolato (con la cedolare secca è sospeso, art. 3 c. 11 D.Lgs. 23/2011).
+- La riduzione del 10% per viabilità ad elevato traffico si applica solo al canone massimo, come previsto dagli accordi.
 - Per transitori e studenti valgono le stesse regole dell'agevolato, senza la maggiorazione per durata.
 - Categorie catastali ammesse: quelle previste dalla tabella dell'accordo (per Ameglia da A/1 ad A/7).
 - I valori sono stati trascritti da scansioni dei testi degli accordi: in caso di dubbio fa fede il testo ufficiale.

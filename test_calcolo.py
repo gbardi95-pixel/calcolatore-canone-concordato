@@ -55,8 +55,16 @@ def test_pct_pregi(n, pct):
 def test_maggiorazioni_sul_canone_base():
     r = base(arredo_pct=30.0, durata_pct=8.0, storico_vincolato=True, n_accessori_pregio=2,
              viabilita_traffico=True)
-    assert r.variazione_pct == 30 + 8 + 10 + 5 - 10
-    assert r.canone_min == round(66 * 4.0 * 1.43, 2)
+    assert r.variazione_pct == 30 + 8 + 10 + 5 - 10          # massimo: con la viabilità
+    assert r.variazione_pct_min == 30 + 8 + 10 + 5           # minimo: senza
+    assert r.canone_min == round(66 * 4.0 * 1.53, 2)
+    assert r.canone_max == round(66 * 7.0 * 1.43, 2)
+
+
+def test_viabilita_solo_sul_massimo():
+    senza, con = base(), base(viabilita_traffico=True)
+    assert con.canone_min == senza.canone_min
+    assert con.canone_max == round(senza.canone_max * 0.9, 2)
 
 
 def test_categoria_non_in_tabella_salta_criterio():
@@ -101,3 +109,15 @@ def test_la_spezia():
                       spazi_comuni=list(L.SPAZI_COMUNI)[4], autorimessa_livello=list(L.AUTORIMESSA)[2]))
     assert r.fascia == "MIN"
     assert (r.canone_min, r.canone_max) == (round(66 * 2.32, 2), round(66 * 7.45, 2))
+
+
+def test_minimo_non_supera_il_massimo_ridotto():
+    # fascia stretta + molte maggiorazioni + viabilità: il minimo viene limitato al massimo
+    from accordi import ACCORDI
+    L = ACCORDI["Lerici"]
+    r = calcola(Input(accordo=L, zona="D4 (Guercio)", categoria="A/2", mq_abitazione=80.0,
+                      tipologia_edilizia=list(L.TIPOLOGIA_EDILIZIA)[0], vetusta=list(L.VETUSTA)[0],
+                      spazi_comuni=list(L.SPAZI_COMUNI)[0], autorimessa_livello=list(L.AUTORIMESSA)[0],
+                      arredo_pct=20.0, storico_vincolato=True, durata_pct=8.0, n_accessori_pregio=4,
+                      viabilita_traffico=True))
+    assert r.canone_min <= r.canone_max
