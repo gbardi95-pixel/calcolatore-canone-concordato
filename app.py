@@ -14,7 +14,10 @@ st.caption("Calcolo secondo l'Accordo Territoriale (L. 431/98, D.M. 16/01/2017)"
 
 nome_accordo = st.selectbox("Accordo territoriale / Comune", list(ACCORDI))
 P = ACCORDI[nome_accordo]
-zona = st.selectbox("Zona", list(P.FASCE_PER_ZONA)) if len(P.FASCE_PER_ZONA) > 1 else next(iter(P.FASCE_PER_ZONA))
+st.caption(f"Comuni: {P.COMUNI}")
+for nota in P.NOTE:
+    st.info(nota)
+zona = st.selectbox("Zona OMI", list(P.FASCE_PER_ZONA)) if len(P.FASCE_PER_ZONA) > 1 else next(iter(P.FASCE_PER_ZONA))
 
 if not P.VERIFICATO:
     st.warning(f"⚠️ **Stima indicativa.** Parametri non ancora verificati. Fonte: {P.FONTE}.")
@@ -69,8 +72,8 @@ with col_dx:
     storico = st.checkbox("Immobile storico vincolato (+10%)")
     istat = st.number_input(
         "Adeguamento ISTAT da applicare ai valori €/m² (%)", min_value=0.0, max_value=50.0, value=0.0, step=0.1,
-        help=("Art. 3 dell'accordo: i valori delle fasce si aggiornano al 100% della variazione ISTAT dal "
-              "15/07/2021 per i contratti nuovi. Indice da completare. Non è l'aggiornamento annuale del "
+        help=(f"Art. 3 dell'accordo: i valori delle fasce si aggiornano al 100% della variazione ISTAT dal "
+              f"{P.DATA_ISTAT} per i contratti nuovi. Indice da completare. Non è l'aggiornamento annuale del "
               "canone in corso (art. 5, max 75%), a cui si rinuncia con la cedolare secca."),
     )
 

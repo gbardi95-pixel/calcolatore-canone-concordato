@@ -11,7 +11,9 @@ superficie convenzionale, fascia di oscillazione (MIN / MEDIA / MAX) e maggioraz
 
 | Accordo | Stato |
 |---|---|
-| Ameglia, Bolano, Castelnuovo Magra, Vezzano Ligure (in vigore dal 15/07/2018) | disponibile |
+| Ameglia, Bolano, Castelnuovo Magra, Vezzano Ligure (dal 15/07/2018) | verificato |
+| Riccò del Golfo e altri 13 comuni, Bonassola e altri 7 comuni, Arcola, Luni, Sarzana, Santo Stefano di Magra, Lerici | disponibili, da ricontrollare (l'app mostra un avviso) |
+| La Spezia (validità 2026-2028) | non ancora inserito: ha una struttura diversa |
 
 Il programma è pensato per supportare più aree: ogni accordo è un file in `accordi/`.
 

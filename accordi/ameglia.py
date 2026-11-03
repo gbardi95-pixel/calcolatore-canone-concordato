@@ -8,6 +8,9 @@ progetto; nessun accordo più recente risulta stipulato (3/11/2026).
 """
 
 NOME = "Ameglia, Bolano, Castelnuovo Magra, Vezzano Ligure (2018)"
+COMUNI = "Ameglia, Bolano, Castelnuovo Magra, Vezzano Ligure"
+DATA_ISTAT = "15/07/2021"   # da quando i valori delle fasce si aggiornano al 100% ISTAT (art. 3)
+NOTE: list[str] = []         # avvertenze mostrate nell'app
 VERIFICATO = True
 FONTE = ("Accordo Territoriale Ameglia/Bolano/Castelnuovo Magra/Vezzano Ligure, "
          "in vigore dal 15/07/2018 (data di deposito: da completare)")
